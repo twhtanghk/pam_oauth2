@@ -23,7 +23,6 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t *pamh, int flags, int argc, cons
   const char *id, *secret;
   pam_get_user(pamh, &id, NULL);
   pam_get_authtok(pamh, PAM_AUTHTOK, &secret, NULL);
-  syslog(LOG_AUTH|LOG_DEBUG, "oauth2 authenticate %s %s", id, secret);
   return isauth(id, secret) ? PAM_SUCCESS : PAM_AUTH_ERR;
 }
 
