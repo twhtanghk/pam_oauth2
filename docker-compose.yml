@@ -1,7 +1,7 @@
 version: '2'
 services:
   pam_oauth2:
-    image: twhtanghk/pam_ldap
+    image: twhtanghk/pam_oauth2
     ports:
       - 8000:22
     env_file: 
