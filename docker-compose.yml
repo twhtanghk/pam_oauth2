@@ -1,8 +1,9 @@
 version: '2'
 services:
   pam_oauth2:
-    image: python:2
+    image: twhtanghk/pam_ldap
+    ports:
+      - 8000:22
     env_file: 
       - ../.env
       - ./.env
-    entrypoint: top -b -d 1000
