@@ -3,22 +3,9 @@ import requests
 import hashlib
 import json
 import pydash
-from requests.auth import HTTPBasicAuth
+import env
 
-cfg = {
-  'tokenurl': os.environ['TOKENURL'],
-  'userurl': os.environ['USERURL'],
-  'userlisturl': os.environ['USERLISTURL'],
-  'client': {
-    'id': os.environ['CLIENT_ID'],
-    'secret': os.environ['CLIENT_SECRET']
-  },
-  'user': {
-    'id': os.environ['USER_ID'],
-    'secret': os.environ['USER_SECRET']
-  },
-  'scope': 'User' if 'SCOPE' not in os.environ else os.environ['SCOPE']
-}
+cfg = env.cfg()
 
 '''
   authenticate cfg.user and return oauth2 response

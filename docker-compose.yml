@@ -4,6 +4,7 @@ services:
     image: twhtanghk/pam_oauth2
     ports:
       - 8000:22
+    volumes:
+      - ${COMPOSEROOT}/pam_oauth2/env.py:/usr/src/app/python/env.py
     env_file: 
       - ../.env
-      - ./.env

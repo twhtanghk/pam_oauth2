@@ -6,7 +6,9 @@ ENV VER=${VER:-master} \
 
 WORKDIR $APP
 
-RUN apt-get update && \
+RUN echo PYTHONHOME=/usr/local >>/etc/environment && \
+    echo PYTHONPATH=/usr/src/app/python >>/etc/environment && \
+    apt-get update && \
     apt-get install -y git ssh libpam0g-dev && \
     apt-get clean && \
     mkdir /var/run/sshd && \
