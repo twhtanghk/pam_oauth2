@@ -71,15 +71,10 @@ enum nss_status _nss_oauth2_getpwuid_r(uid_t uid, struct passwd *result, char *b
 enum nss_status _nss_oauth2_getpwnam_r(const char *name, struct passwd *result, char *buffer, size_t buflen, int *errnop)
 {
   syslog(LOG_AUTH|LOG_DEBUG, "_nss_oauth2_getpwnam_r() called");
-  userlist = users();
-  if (userlist) {
-    for (int i = 0; i < userlist->length; i++) {
-      if (strcmp(userlist->result[i].name, name) == 0) {
-        toPasswd(&userlist->result[i], result);
-        return NSS_STATUS_SUCCESS;
-      }
-    }
-    return NSS_STATUS_NOTFOUND;
+  struct User *user = isuser(name);
+  if (user) {
+    toPasswd(user, result);
+    return NSS_STATUS_SUCCESS;
   } else {
     return NSS_STATUS_NOTFOUND;
   }
