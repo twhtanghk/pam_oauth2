@@ -3,33 +3,22 @@ import requests
 import hashlib
 import json
 
-cfg = {
-  'tokenurl': os.environ['TOKENURL'],
-  'userurl': os.environ['USERURL'],
-  'userlisturl': os.environ['USERLISTURL'],
-  'client': {
-    'id': os.environ['CLIENT_ID'],
-    'secret': os.environ['CLIENT_SECRET']
-  },
-  'scope': os.environ['SCOPE']
-}
-
 '''
   authenticate user and return oauth2 response
 '''
 def login(user):
-  data = { 'grant_type': 'password', 'username': user['id'], 'password': user['secret'], 'scope': cfg['scope'] } 
-  return requests.post(cfg['tokenurl'], auth=(cfg['client']['id'], cfg['client']['secret']), data=data)
+  data = { 'grant_type': 'password', 'username': user['id'], 'password': user['secret'], 'scope': os.environ['SCOPE'] } 
+  return requests.post(os.environ['tokenurl'], auth=(os.environ['CLIENT_ID'], os.environ['CLIENT_SECRET']), data=data)
 
 '''
-  authenticate cfg.user and return token
+  authenticate user and return token
 '''
 def token(user):
   res = json.loads(login(user).text)
   return res['access_token']
 
 '''
-  authenticate cfg.user and return if athenticated
+  authenticate user and return if athenticated
 '''
 def isauth(user):
   return login(user).status_code == 200
@@ -38,7 +27,7 @@ def isauth(user):
 user = 'user1'
 '''
 def isuser(user):
-  r = requests.get(cfg['userurl'].format(user))
+  r = requests.get(os.environ['USERURL'].format(user))
   return userJson(json.loads(r.text)) if r.status_code == 200 else {}
 
 '''
@@ -57,7 +46,7 @@ return list of users
 '''
 def users():
   users = []
-  res = {'next': cfg['userlisturl']}
+  res = {'next': os.environ['USERLISTURL']}
   while res['next']:
     r = requests.get(res['next'])
     res = json.loads(r.text)
