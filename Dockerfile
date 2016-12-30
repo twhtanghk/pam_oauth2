@@ -9,7 +9,7 @@ WORKDIR $APP
 RUN echo PYTHONHOME=/usr/local >>/etc/environment && \
     echo PYTHONPATH=/usr/src/app/python >>/etc/environment && \
     apt-get update && \
-    apt-get install -y git ssh libpam0g-dev && \
+    apt-get install -y git ssh sudo libpam0g-dev && \
     apt-get clean && \
     mkdir /var/run/sshd && \
     git clone -b $VER $REPO $APP && \
