@@ -22,4 +22,4 @@ RUN echo PYTHONHOME=/usr/local >>/etc/environment && \
 
 EXPOSE 22
 
-CMD /usr/sbin/sshd -D
+CMD ./entrypoint.sh
