@@ -8,7 +8,7 @@ import json
 '''
 def login(user):
   data = { 'grant_type': 'password', 'username': user['id'], 'password': user['secret'], 'scope': os.environ['SCOPE'] } 
-  return requests.post(os.environ['tokenurl'], auth=(os.environ['CLIENT_ID'], os.environ['CLIENT_SECRET']), data=data)
+  return requests.post(os.environ['TOKENURL'], auth=(os.environ['CLIENT_ID'], os.environ['CLIENT_SECRET']), data=data)
 
 '''
   authenticate user and return token
