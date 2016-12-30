@@ -2,13 +2,20 @@ import os
 import requests
 import hashlib
 import json
-import pydash
-import env
 
-cfg = env.cfg()
+cfg = {
+  'tokenurl': os.environ['TOKENURL'],
+  'userurl': os.environ['USERURL'],
+  'userlisturl': os.environ['USERLISTURL'],
+  'client': {
+    'id': os.environ['CLIENT_ID'],
+    'secret': os.environ['CLIENT_SECRET']
+  },
+  'scope': os.environ['SCOPE']
+}
 
 '''
-  authenticate cfg.user and return oauth2 response
+  authenticate user and return oauth2 response
 '''
 def login(user):
   data = { 'grant_type': 'password', 'username': user['id'], 'password': user['secret'], 'scope': cfg['scope'] } 
@@ -31,8 +38,8 @@ def isauth(user):
 user = 'user1'
 '''
 def isuser(user):
-  ret = pydash.filter_(users(), {'name': user})
-  return pydash.first(ret)
+  r = requests.get(cfg['userurl'].format(user))
+  return userJson(json.loads(r.text)) if r.status_code == 200 else {}
 
 '''
 return json resprentation of input user
@@ -44,15 +51,15 @@ def userJson(user):
   home = "/home/{0}".format(name)
   shell = '/bin/sh'
   return {'name': name, 'uid': uid, 'gid': gid, 'home': home, 'shell': shell}
+
 '''
 return list of users
 '''
 def users():
-  ptoken = token(cfg['user']) 
   users = []
   res = {'next': cfg['userlisturl']}
   while res['next']:
-    r = requests.get(res['next'], headers={'Authorization': "Bearer {0}".format(ptoken)})
+    r = requests.get(res['next'])
     res = json.loads(r.text)
     for user in res['results']:
       users.append(userJson(user))
