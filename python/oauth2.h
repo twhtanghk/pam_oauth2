@@ -19,5 +19,6 @@ struct Users {
 extern int isauth(const char *id, const char *secret);
 extern struct User *isuser(const char *username);
 extern struct Users *users(void);
+extern void printenv(void);
 
 #endif
