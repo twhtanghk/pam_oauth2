@@ -14,6 +14,7 @@
 # pam-auth-update(8) for details.
 
 # here are the per-package modules (the "Primary" block)
+auth	required	pam_env.so
 auth	[success=1 default=ignore]	pam_unix.so nullok_secure
 auth	sufficient	pam_oauth2.so
 # here's the fallback if no module succeeds

@@ -12,4 +12,4 @@ ssh -p 8000 user@localhost
 ```
 
 ## Limitation
-cannot automatically create home directory via pam_mkhomedir
+Manually create user home directory, chown user1:10000 /home/user1 now and it is not ready to create home directory automatically via pam_mkhomedir.
