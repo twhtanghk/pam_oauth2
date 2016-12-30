@@ -1,3 +1,1 @@
 requests==2.12.3
-pydash==3.4.7
-
