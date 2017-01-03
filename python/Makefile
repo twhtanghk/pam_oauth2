@@ -1,4 +1,4 @@
-CFLAGS=$(shell python-config --cflags) -std=c99
+CFLAGS=$(shell python-config --cflags | sed 's/Werror=format-security//g') -std=c99
 
 LDFLAGS=$(shell python-config --ldflags)
 
