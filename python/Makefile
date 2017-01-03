@@ -1,4 +1,4 @@
-CFLAGS=$(shell python-config --cflags | sed 's/Werror=format-security//g') -std=c99
+CFLAGS=$(shell python-config --cflags | sed 's/\-Werror=format\-security//g') -std=c99
 
 LDFLAGS=$(shell python-config --ldflags)
 
@@ -11,11 +11,11 @@ oauth2.o:
 
 isauth: oauth2.o
 	$(CC) $(CFLAGS) -fPIC -c -o isauth.o isauth.c
-	$(CC) $(LDFLAGS) -o isauth oauth2.o isauth.o
+	$(CC) -o isauth oauth2.o isauth.o $(LDFLAGS)
 
 users: oauth2.o
 	$(CC) $(CFLAGS) -fPIC -c -o users.o users.c
-	$(CC) $(LDFLAGS) -o users oauth2.o users.o
+	$(CC) -o users oauth2.o users.o $(LDFLAGS)
 
 clean:
 	rm -f *.o *.pyc core isauth isuser users
