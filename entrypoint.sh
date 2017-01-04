@@ -1,9 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-echo TOKENURL=$TOKENURL >>/etc/environment
-echo USERURL=$USERURL >>/etc/environment
-echo USERLISTURL=$USERLISTURL >>/etc/environment
-echo CLIENT_ID=$CLIENT_ID >>/etc/environment
-echo CLIENT_SECRET=$CLIENT_SECRET >>/etc/environment
-echo SCOPE=$SCOPE >>/etc/environment
+for i in PYTHONHOME PYTHONPATH TOKENURL USERURL USERLISTURL CLIENT_ID CLIENT_SECRET SCOPE; do
+  echo $i=${!i} >>/etc/environment
+done
+
 /usr/sbin/sshd -D
