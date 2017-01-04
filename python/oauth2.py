@@ -28,14 +28,14 @@ user = 'user1'
 '''
 def isuser(user):
   r = requests.get(os.environ['USERURL'].format(user))
-  return userJson(json.loads(r.text)) if r.status_code == 200 else {}
+  return userJson(json.loads(r.text)) if r.status_code == 200 else None
 
 '''
 return json resprentation of input user
 '''
 def userJson(user):
   name = user['username']
-  uid = int(hashlib.sha1(user['url']).hexdigest(), 16) % (10 ** 8)
+  uid = int(hashlib.sha1(user['url'].encode('utf-8')).hexdigest(), 16) % (10 ** 8)
   gid = 10000
   home = "/home/{0}".format(name)
   shell = '/bin/sh'

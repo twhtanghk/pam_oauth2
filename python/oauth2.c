@@ -2,6 +2,9 @@
 #include <syslog.h>
 #include "oauth2.h"
 
+#define PyString_FromString(s) PyUnicode_DecodeFSDefault(s)
+#define PyString_AsString(s) PyBytes_AS_STRING(PyUnicode_AsEncodedString(s, "utf-8", "strict"))
+
 char *pyhome = NULL;
 PyObject *pIsauth = NULL;
 PyObject *pIsuser = NULL;
